@@ -1,0 +1,9 @@
+{
+  "market": "PRA (points + rebounds + assists)",
+  "leagues": ["NBA", "WNBA"],
+  "min_prior_games": 10,
+  "min_rolling_minutes": 18.0,
+  "push_per_league": 8,
+  "ladder_step": 2.0,
+  "note": "Fitted on 2021-2025, 2026 held back. Calibration corrected out of sample on a trailing 25% slice."
+}
