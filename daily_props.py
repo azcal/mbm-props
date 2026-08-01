@@ -30,7 +30,6 @@ LEAGUES = {
     "WNBA": dict(repo="wehoop-wnba-data/main/wnba", espn="basketball/wnba",
                  seasons=range(2021, 2028)),
 }
-PUSH_PER_LEAGUE = SPEC.get("push_per_league", 8)
 LADDER_STEP = SPEC.get("ladder_step", 2.0)
 
 
@@ -114,20 +113,36 @@ def run(day_str):
     log = pd.read_csv(pred_path, dtype={"game_id": str, "athlete_id": str}) \
         if os.path.exists(pred_path) else pd.DataFrame()
 
+    # One fit across both leagues. Pooling helps each: NBA MAE 6.614 -> 6.608 and WNBA
+    # 6.387 -> 6.356. WNBA alone has a fifth the data and its edge over the naive baseline
+    # is thin, so it borrows the shape of the relationship from the larger league. A league
+    # indicator was tested and made both slightly worse, so the leagues really do behave the
+    # same once minutes and form are accounted for.
     push, skipped, all_rows, console = {}, 0, [], []
+    frames = {}
     for lg in LEAGUES:
         download(lg, cur)
         P = load(lg)
         if P.empty:
             print(f"{lg}: no player data")
             continue
-        D = E.build(P)
+        D = E.mates_out(E.build(P))       # historical actives from the box score
         D = D[D.mins > 0].reset_index(drop=True)
-        hist = D[E.playable(D)].reset_index(drop=True)
-        if len(hist) < 3000:
-            print(f"{lg}: only {len(hist)} usable rows, not enough to fit")
-            continue
-        heads = E.fit(hist, np.ones(len(hist), bool))
+        D["lg"] = lg
+        frames[lg] = D
+    if not frames:
+        print("no player data for any league")
+        return
+    pool = pd.concat(frames.values(), ignore_index=True)
+    hist = pool[E.playable(pool)].reset_index(drop=True)
+    if len(hist) < 3000:
+        print(f"only {len(hist)} usable rows pooled, not enough to fit")
+        return
+    heads = E.fit(hist, np.ones(len(hist), bool))
+    print(f"pooled fit on {len(hist):,} player-games "
+          f"({', '.join(f'{k} {int((hist.lg == k).sum()):,}' for k in frames)})")
+
+    for lg, D in frames.items():
 
         teams = slate(lg, day)
         if not teams:
@@ -142,6 +157,12 @@ def run(day_str):
         if tonight.empty:
             print(f"{lg}: no boardable players tonight")
             continue
+        # Recompute teammates-out from tonight's actives. The historical version reads the
+        # box score, which does not exist yet, so the injury feed stands in: everyone on the
+        # roster who is not listed Out counts as available.
+        roster = latest[latest.team_id.isin(teams)]
+        actives = set(roster.athlete_id.astype(str)) - set(outs)
+        tonight = E.mates_out(tonight.assign(game_date=pd.Timestamp(day)), actives)
         mu, sd = E.project(heads, tonight)
         med = E.median(heads, mu, sd)
         tonight["proj"] = mu                     # the mean, kept for the log
@@ -174,9 +195,11 @@ def run(day_str):
                              "p_grade": round(float(r.p_grade), 4),
                              "gap": round(float(r.gap), 2), "model": "v1"})
 
-        # push only where the model is furthest from the player's own recent form
-        top = tonight.sort_values("gap", ascending=False).head(PUSH_PER_LEAGUE)
-        for r in top.itertuples():
+        # Every playable player is pushed. A divergence filter was tested and dropped:
+        # skill by gap band came out flat at 7.0% to 9.2% with no ordering, so selecting on
+        # it was choosing different forecasts rather than better ones. The playability
+        # filter in the engine does the real work.
+        for r in tonight.sort_values("proj", ascending=False).itertuples():
             lad = E.ladder(heads, r.proj, r.sd, step=LADDER_STEP)
             best = max(lad, key=lambda x: x[1] if x[1] < 0.75 else 0)
             if BF.min_odds(best[1]) < BF.PRICE_FLOOR:

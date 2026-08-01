@@ -2,8 +2,8 @@
   "market": "PRA (points + rebounds + assists)",
   "leagues": ["NBA", "WNBA"],
   "min_prior_games": 10,
-  "min_rolling_minutes": 18.0,
-  "push_per_league": 8,
+  "min_rolling_minutes": 24.0,
+  "max_minutes_cv": 0.20,
   "ladder_step": 2.0,
-  "note": "Fitted on 2021-2025, 2026 held back. Calibration corrected out of sample on a trailing 25% slice."
+  "note": "Fitted through 2025, 2026 held back and opened once. Playability tuned on relative error: minutes and minutes stability both separate cleanly, trend does not once those two are applied."
 }
