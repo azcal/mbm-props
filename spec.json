@@ -9,5 +9,6 @@
   "max_minutes_cv": 0.2,
   "ladder_step": 2.0,
   "note": "Fitted through 2025, 2026 held back and opened once. Playability tuned on relative error: minutes and minutes stability both separate cleanly, trend does not once those two are applied. Boardable also requires minutes logged within recent_days, which removes players whose last game was a prior season.",
-  "recent_days": 21
+  "recent_days": 21,
+  "market_tag": "PTS+REB+AST"
 }

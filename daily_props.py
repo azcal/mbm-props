@@ -44,6 +44,10 @@ LEAGUES = {
                  seasons=range(2021, 2028)),
 }
 LADDER_STEP = SPEC.get("ladder_step", 2.0)
+# Printed on every board header so a row says what it is forecasting. Without it "forecast
+# 36" and "over 32.5" name no market at all, which is fine for one board and not fine the
+# moment a second one exists. Kept in the spec so adding a market is a config change.
+MARKET_TAG = SPEC.get("market_tag", "PTS+REB+AST")
 
 # How recently a player must have logged minutes to be boardable.
 #
@@ -235,7 +239,7 @@ def run(day_str):
         for r in tonight.sort_values("gap", ascending=False).itertuples():
             lad = E.ladder(heads, r.proj, r.sd, step=LADDER_STEP)
             console.append(f"  {str(r.athlete_display_name)[:22]:<22} {r.matchup:<12} "
-                           f"forecast {r.median:4.0f}  (mean {r.proj:.1f}, "
+                           f"{MARKET_TAG} forecast {r.median:4.0f}  (mean {r.proj:.1f}, "
                            f"last10 {r.l10_pra:.1f})")
             console.append("      " + "   ".join(
                 f"o{L:.1f} {p:.0%}" for L, p in lad))
@@ -259,7 +263,7 @@ def run(day_str):
                 skipped += 1
                 continue
             body = [f"{day.isoformat()}  {str(r.athlete_display_name)[:22]}  "
-                    f"{r.matchup}  forecast {r.median:.0f}"]
+                    f"{r.matchup}  {MARKET_TAG} forecast {r.median:.0f}"]
             for L, p in lad:
                 if BF.min_odds(p) >= BF.PRICE_FLOOR and p >= 0.20:
                     body.append(f"    over {L:.1f}   {p:>5.1%}  "
