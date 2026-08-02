@@ -1,9 +1,13 @@
 {
   "market": "PRA (points + rebounds + assists)",
-  "leagues": ["NBA", "WNBA"],
+  "leagues": [
+    "NBA",
+    "WNBA"
+  ],
   "min_prior_games": 10,
   "min_rolling_minutes": 24.0,
-  "max_minutes_cv": 0.20,
+  "max_minutes_cv": 0.2,
   "ladder_step": 2.0,
-  "note": "Fitted through 2025, 2026 held back and opened once. Playability tuned on relative error: minutes and minutes stability both separate cleanly, trend does not once those two are applied."
+  "note": "Fitted through 2025, 2026 held back and opened once. Playability tuned on relative error: minutes and minutes stability both separate cleanly, trend does not once those two are applied. Boardable also requires minutes logged within recent_days, which removes players whose last game was a prior season.",
+  "recent_days": 21
 }

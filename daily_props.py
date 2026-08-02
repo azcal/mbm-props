@@ -19,6 +19,19 @@ import engine_props as E
 import board_format as BF
 import notify, tg_delta
 
+# Shared files must be at least this new. A minimum rather than an exact match, so a later
+# improvement to a shared file does not force an edit here. Raise it only for a change this
+# runner depends on.
+#   2026-08-02  tg_delta's optional "match" field, which this board uses to carry the
+#               forecast, because its ladder prices barely move (see the push block).
+SHARED_MIN = "2026-08-02"
+for _mod in (BF, notify, tg_delta):
+    _have = getattr(_mod, "VERSION", "")
+    if _have < SHARED_MIN:
+        raise ImportError(
+            f"{_mod.__name__}.py is version {_have or 'unstamped'}, this runner needs "
+            f"{SHARED_MIN} or newer. Copy the current shared files into this repo.")
+
 DATA = os.path.join(HERE, "data")
 LOGS = os.path.join(HERE, "logs")
 SPEC = json.load(open(os.path.join(HERE, "spec.json")))
@@ -31,6 +44,20 @@ LEAGUES = {
                  seasons=range(2021, 2028)),
 }
 LADDER_STEP = SPEC.get("ladder_step", 2.0)
+
+# How recently a player must have logged minutes to be boardable.
+#
+# Without this, `latest` hands back each player's most recent state across every loaded
+# season, so anyone whose final game was years ago still boards on any night their old team
+# plays. Measured on the 2026-07-31 board: eleven of forty-one players never appeared in a
+# box score, including three who retired before 2025. Neither existing filter catches them.
+# The injury feed does not list a retired player as Out, and playable() cannot help because
+# n_prior counts games within a season and theirs was a complete one.
+#
+# It is keyed on the last game with minutes rather than the last appearance on a roster,
+# so a player who dresses without playing is dropped too. Twenty-one days survives a normal
+# injury absence and the NBA All-Star break, and is far short of an offseason.
+RECENT_DAYS = SPEC.get("recent_days", 21)
 
 
 def download(lg, cur):
@@ -98,7 +125,9 @@ def out_ids(lg):
     bad = set()
     for team in r.get("injuries", []):
         for inj in team.get("injuries", []):
-            if str(inj.get("status", "")).lower() in ("out", "suspension"):
+            # Doubtful counts as out. A doubtful player who does suit up is a minutes
+            # risk, which is the one thing this model cannot price.
+            if str(inj.get("status", "")).lower() in ("out", "suspension", "doubtful"):
                 a = inj.get("athlete") or {}
                 if a.get("id"):
                     bad.add(str(a["id"]))
@@ -119,10 +148,11 @@ def run(day_str):
     # indicator was tested and made both slightly worse, so the leagues really do behave the
     # same once minutes and form are accounted for.
     push, skipped, all_rows, console = {}, 0, [], []
-    frames = {}
+    frames, raw = {}, {}
     for lg in LEAGUES:
         download(lg, cur)
         P = load(lg)
+        raw[lg] = P          # kept for grading; re-reading every parquet twice was wasteful
         if P.empty:
             print(f"{lg}: no player data")
             continue
@@ -152,17 +182,40 @@ def run(day_str):
         # each player's most recent state, for the teams playing today
         latest = (D.sort_values("game_date").groupby("athlete_id").tail(1)
                   .assign(team_id=lambda x: x.team_id.astype(str)))
-        tonight = latest[latest.team_id.isin(teams) & ~latest.athlete_id.astype(str).isin(outs)]
-        tonight = tonight[E.playable(tonight)].copy()
-        if tonight.empty:
-            print(f"{lg}: no boardable players tonight")
+        # Applied here, above both `tonight` and `roster`, so it also keeps inactive players
+        # out of the actives set. Leaving them in there inflates `present` inside mates_out
+        # and understates how depleted a team is, which distorts the projection of every
+        # real player alongside them.
+        cutoff = pd.Timestamp(day) - pd.Timedelta(days=RECENT_DAYS)
+        stale = latest.team_id.isin(teams) & (latest.game_date < cutoff)
+        if stale.any():
+            names = list(latest.loc[stale, "athlete_display_name"].astype(str))
+            print(f"{lg}: {int(stale.sum())} on tonight's teams have not logged minutes in "
+                  f"{RECENT_DAYS} days, dropped: {', '.join(names[:8])}"
+                  + (" ..." if len(names) > 8 else ""))
+        latest = latest[latest.game_date >= cutoff]
+        roster = latest[latest.team_id.isin(teams)]
+        if roster.empty:
+            print(f"{lg}: nobody rostered on tonight's teams")
             continue
         # Recompute teammates-out from tonight's actives. The historical version reads the
         # box score, which does not exist yet, so the injury feed stands in: everyone on the
         # roster who is not listed Out counts as available.
-        roster = latest[latest.team_id.isin(teams)]
+        #
+        # Summed over the WHOLE roster, not the boardable subset. Historically `present`
+        # comes from everyone who appeared in the box score, so restricting it to playable
+        # players counts every bench player as missing and pushes the feature far outside
+        # the range it was fitted on. Measured on 2026-08-01 WNBA: +0.441 the subset way
+        # against a training 95th percentile of +0.179, and -0.088 this way against a
+        # training mean of +0.003. playable() is applied after, so the boarded rows are the
+        # same ones as before, carrying a feature value that is in distribution.
         actives = set(roster.athlete_id.astype(str)) - set(outs)
-        tonight = E.mates_out(tonight.assign(game_date=pd.Timestamp(day)), actives)
+        pool = E.mates_out(roster.assign(game_date=pd.Timestamp(day)), actives)
+        tonight = pool[~pool.athlete_id.astype(str).isin(outs)]
+        tonight = tonight[E.playable(tonight)].copy()
+        if tonight.empty:
+            print(f"{lg}: no boardable players tonight")
+            continue
         mu, sd = E.project(heads, tonight)
         med = E.median(heads, mu, sd)
         tonight["proj"] = mu                     # the mean, kept for the log
@@ -211,8 +264,16 @@ def run(day_str):
                 if BF.min_odds(p) >= BF.PRICE_FLOOR and p >= 0.20:
                     body.append(f"    over {L:.1f}   {p:>5.1%}  "
                                 f"find {BF.price(p)} or better")
+            # The gate's price check is nearly blind here. The ladder is built around the
+            # projection, so its probabilities are close to invariant: across tonight's
+            # board a forecast range of 16 to 36 PRA produced min_odds from 1.47 to 1.60,
+            # against a 0.02 tolerance. A teammate being ruled out between the 10am and 4pm
+            # runs moves the forecast several points and shifts every line, while the
+            # prices barely budge. So the forecast itself goes in the "match" field, which
+            # the gate compares and reports verbatim.
             push[f"{r.game_id}|{r.athlete_id}"] = {"line": "\n".join(body),
-                                                   "min_odds": BF.min_odds(best[1])}
+                                                   "min_odds": BF.min_odds(best[1]),
+                                                   "match": f"forecast {r.median:.0f}"}
 
     for ln in console:
         print(ln)
@@ -233,14 +294,13 @@ def run(day_str):
     alerts = []
     if len(log):
         actual = {}
-        for lg in LEAGUES:
-            P = load(lg)
+        for lg, P in raw.items():
             if P.empty:
                 continue
             P = P.assign(pra=P.points + P.rebounds + P.assists,
                          d=pd.to_datetime(P.game_date).dt.date.astype(str))
-            for r in P.itertuples():
-                actual[f"{r.d}|{r.athlete_id}"] = float(r.pra)
+            actual.update(zip(P.d + "|" + P.athlete_id.astype(str),
+                              P.pra.astype(float)))
         log["actual"] = (log.date.astype(str) + "|" + log.athlete_id.astype(str)).map(actual)
         log.to_csv(pred_path, index=False)
         done = log[log.actual.notna()]
@@ -272,6 +332,10 @@ def run(day_str):
                            + " no longer beating the baseline, stop betting this board"]
             colour = notify.RED
         notify.send(title, body, foot, colour)
+    elif not push:
+        print("no board to send")
+    else:
+        print("board unchanged since the last push, nothing sent")
 
 
 if __name__ == "__main__":
