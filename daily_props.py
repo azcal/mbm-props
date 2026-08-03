@@ -17,6 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import engine_props as E
 import board_format as BF
+import espn_roster as R
 import notify, tg_delta
 
 # Shared files must be at least this new. A minimum rather than an exact match, so a later
@@ -25,7 +26,7 @@ import notify, tg_delta
 #   2026-08-02  tg_delta's optional "match" field, which this board uses to carry the
 #               forecast, because its ladder prices barely move (see the push block).
 SHARED_MIN = "2026-08-02"
-for _mod in (BF, notify, tg_delta):
+for _mod in (BF, notify, tg_delta, R):
     _have = getattr(_mod, "VERSION", "")
     if _have < SHARED_MIN:
         raise ImportError(
@@ -119,23 +120,20 @@ def slate(lg, day):
     return out
 
 
-def out_ids(lg):
-    """Athlete ids listed Out on the ESPN injury feed."""
-    try:
-        r = requests.get(f"https://site.api.espn.com/apis/site/v2/sports/"
-                         f"{LEAGUES[lg]['espn']}/injuries", headers=H, timeout=45).json()
-    except Exception:
-        return set()
-    bad = set()
-    for team in r.get("injuries", []):
-        for inj in team.get("injuries", []):
-            # Doubtful counts as out. A doubtful player who does suit up is a minutes
-            # risk, which is the one thing this model cannot price.
-            if str(inj.get("status", "")).lower() in ("out", "suspension", "doubtful"):
-                a = inj.get("athlete") or {}
-                if a.get("id"):
-                    bad.add(str(a["id"]))
-    return bad
+def rosters_and_outs(lg, day):
+    """Tonight's rosters and who is unavailable, from the roster endpoint.
+
+    Replaces the standalone /injuries call. Roster membership matters here for the same
+    reason it does on the game boards: `latest.team_id` reads off a player's most recent
+    box score, so a player traded this week is still filed under her old team until she
+    appears in one for the new one.
+    """
+    base = f"https://site.api.espn.com/apis/site/v2/sports/{LEAGUES[lg]['espn']}"
+    ros = R.fetch(base)
+    outs = R.out_ids(ros)
+    if ros["by_ab"]:
+        R.log_statuses(ros, LOGS, day, lg)
+    return ros, outs
 
 
 def run(day_str):
@@ -182,7 +180,7 @@ def run(day_str):
         if not teams:
             print(f"{lg}: no games on {day}")
             continue
-        outs = out_ids(lg)
+        ros, outs = rosters_and_outs(lg, day)
         # each player's most recent state, for the teams playing today
         latest = (D.sort_values("game_date").groupby("athlete_id").tail(1)
                   .assign(team_id=lambda x: x.team_id.astype(str)))
@@ -190,6 +188,18 @@ def run(day_str):
         # out of the actives set. Leaving them in there inflates `present` inside mates_out
         # and understates how depleted a team is, which distorts the projection of every
         # real player alongside them.
+        # Team membership from the roster, overriding what the last box score says. Without
+        # this a player traded in is still filed under her old team, so she is missing from
+        # her new team's board and her new team's mates_out, and counted for her old one.
+        # `teams` is keyed by ESPN team id, which is what by_id carries.
+        if ros["by_id"]:
+            aid2tid = {aid: tid for tid, ids in ros["by_id"].items() for aid in ids}
+            mapped = latest.athlete_id.astype(str).map(aid2tid)
+            moved = int((mapped.notna() & (mapped != latest.team_id)).sum())
+            if moved:
+                print(f"{lg}: {moved} players re-filed to their current roster team")
+            latest = latest.assign(team_id=mapped.fillna(latest.team_id))
+
         cutoff = pd.Timestamp(day) - pd.Timedelta(days=RECENT_DAYS)
         stale = latest.team_id.isin(teams) & (latest.game_date < cutoff)
         if stale.any():
