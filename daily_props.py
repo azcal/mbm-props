@@ -10,7 +10,7 @@ Players listed Out are dropped. No market inputs anywhere.
 
 Usage: python daily_props.py [--date YYYY-MM-DD]
 """
-import argparse, io, json, os, sys, datetime as dt
+import argparse, io, json, os, sys, time, datetime as dt
 import numpy as np, pandas as pd, requests
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -97,12 +97,33 @@ def load(lg):
 
 
 def slate(lg, day):
-    """Teams playing today, from the ESPN scoreboard."""
-    try:
-        r = requests.get(f"https://site.api.espn.com/apis/site/v2/sports/"
-                         f"{LEAGUES[lg]['espn']}/scoreboard",
-                         headers=H, params={"dates": day.strftime("%Y%m%d")}, timeout=45).json()
-    except Exception:
+    """Teams playing today, from the ESPN scoreboard.
+
+    Reports why it came back empty. This used to swallow every exception and return {},
+    which printed "no games" whether the league was out of season, ESPN had rate-limited
+    us, or the response was not JSON. Those need different responses and looked identical.
+    """
+    url = (f"https://site.api.espn.com/apis/site/v2/sports/"
+           f"{LEAGUES[lg]['espn']}/scoreboard")
+    for attempt in range(3):
+        try:
+            resp = requests.get(url, headers=H, params={"dates": day.strftime("%Y%m%d")},
+                                timeout=45)
+        except Exception as ex:
+            print(f"{lg}: scoreboard unreachable ({type(ex).__name__}), attempt {attempt+1}")
+            time.sleep(3)
+            continue
+        if resp.status_code == 200:
+            try:
+                r = resp.json()
+                break
+            except Exception:
+                print(f"{lg}: scoreboard returned non-JSON, {resp.text[:80]!r}")
+                return {}
+        print(f"{lg}: scoreboard HTTP {resp.status_code}, attempt {attempt+1}")
+        time.sleep(3)
+    else:
+        print(f"{lg}: scoreboard failed three times, treating as no slate")
         return {}
     out = {}
     for ev in r.get("events", []):
@@ -120,7 +141,7 @@ def slate(lg, day):
     return out
 
 
-def rosters_and_outs(lg, day):
+def rosters_and_outs(lg, day, team_ids=None):
     """Tonight's rosters and who is unavailable, from the roster endpoint.
 
     Replaces the standalone /injuries call. Roster membership matters here for the same
@@ -129,7 +150,10 @@ def rosters_and_outs(lg, day):
     appears in one for the new one.
     """
     base = f"https://site.api.espn.com/apis/site/v2/sports/{LEAGUES[lg]['espn']}"
-    ros = R.fetch(base)
+    # Only the teams on tonight's slate. The full sweep was one call per team, thirty for
+    # NBA, which is a lot of requests against a host that starts refusing, for rosters
+    # nothing on the board will ever read.
+    ros = R.fetch(base, only=team_ids)
     outs = R.out_ids(ros)
     if ros["by_ab"]:
         R.log_statuses(ros, LOGS, day, lg)
@@ -180,7 +204,7 @@ def run(day_str):
         if not teams:
             print(f"{lg}: no games on {day}")
             continue
-        ros, outs = rosters_and_outs(lg, day)
+        ros, outs = rosters_and_outs(lg, day, set(teams))
         # each player's most recent state, for the teams playing today
         latest = (D.sort_values("game_date").groupby("athlete_id").tail(1)
                   .assign(team_id=lambda x: x.team_id.astype(str)))
