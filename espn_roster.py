@@ -29,7 +29,12 @@ import requests
 
 VERSION = "2026-08-03"
 
-H = {"User-Agent": "Mozilla/5.0"}
+# ESPN 403s ANY custom User-Agent and only serves the requests default. Measured
+# 2026-08-05 on the WNBA scoreboard: no header 200, "Mozilla/5.0" 403, an honest
+# identifier with contact details 403, a full browser header set 403. mbm-wnba has
+# always worked because it never set one. Do not "fix" this by adding a UA.
+ESPN_H = {}
+H = ESPN_H
 
 # Statuses that remove a player from tonight's actives.
 #
