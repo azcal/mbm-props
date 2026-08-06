@@ -166,6 +166,71 @@ def rosters_and_outs(lg, day, team_ids=None):
     return ros, outs
 
 
+def grade_from_espn(log):
+    """Fill in PRA totals the hoopR and wehoop mirrors have not published yet.
+
+    Same lag the game boards hit. Measured 2026-08-06: wehoop's latest completed WNBA game
+    was 2026-08-01 while ESPN had every game through 2026-08-05 with full box scores. Four
+    days of props sat ungraded, which stalls the rolling MAE and the tripwire.
+
+    ESPN's summary endpoint returns per-athlete stat lines with a label row, so PRA is
+    read by looking up PTS, REB and AST by name rather than by position. It only touches
+    rows the mirrors left blank and walks back at most two weeks.
+    """
+    if "actual" not in log.columns or log.empty:
+        return log
+    missing = log[log.actual.isna()]
+    if missing.empty:
+        return log
+    cutoff = str(pd.Timestamp.utcnow().date() - pd.Timedelta(days=14))
+    missing = missing[missing.date.astype(str) >= cutoff]
+    if missing.empty:
+        return log
+
+    found = {}
+    for lg, grp in missing.groupby("league"):
+        base = f"https://site.api.espn.com/apis/site/v2/sports/{LEAGUES[lg]['espn']}"
+        for gid in sorted(set(grp.game_id.astype(str))):
+            try:
+                j = requests.get(f"{base}/summary", headers=ESPN_H,
+                                 params={"event": gid}, timeout=30).json()
+            except Exception:
+                continue
+            for blk in j.get("boxscore", {}).get("players", []):
+                for st in blk.get("statistics", []):
+                    labels = [str(x).upper() for x in (st.get("labels") or [])]
+                    try:
+                        ip, ir, ia = (labels.index("PTS"), labels.index("REB"),
+                                      labels.index("AST"))
+                    except ValueError:
+                        continue
+                    for a in st.get("athletes", []):
+                        if a.get("didNotPlay"):
+                            continue
+                        aid = str((a.get("athlete") or {}).get("id", ""))
+                        vals = a.get("stats") or []
+                        if not aid or len(vals) <= max(ip, ir, ia):
+                            continue
+                        try:
+                            # Keyed on game AND athlete. Keying on athlete alone would
+                            # write one night's line onto every ungraded row that player
+                            # has in the window, which is most of them mid-season.
+                            found[(gid, aid)] = (float(vals[ip]) + float(vals[ir])
+                                                 + float(vals[ia]))
+                        except (TypeError, ValueError):
+                            continue
+            time.sleep(0.3)                      # this is one call per game, so be polite
+    if not found:
+        return log
+    key = list(zip(log.game_id.astype(str), log.athlete_id.astype(str)))
+    fill = pd.Series([found.get(k) for k in key], index=log.index, dtype="float64")
+    n = int((log.actual.isna() & fill.notna()).sum())
+    if n:
+        log["actual"] = log.actual.fillna(fill)
+        print(f"graded {n} prop(s) from ESPN that the mirrors have not published yet")
+    return log
+
+
 def run(day_str):
     day = dt.datetime.strptime(day_str, "%Y-%m-%d").date()
     cur = day.year + (1 if day.month >= 10 else 0)
@@ -346,6 +411,7 @@ def run(day_str):
             actual.update(zip(P.d + "|" + P.athlete_id.astype(str),
                               P.pra.astype(float)))
         log["actual"] = (log.date.astype(str) + "|" + log.athlete_id.astype(str)).map(actual)
+        log = grade_from_espn(log)
         log.to_csv(pred_path, index=False)
         done = log[log.actual.notna()]
         if len(done) >= 50:
