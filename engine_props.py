@@ -197,9 +197,19 @@ def p_over(H, mu, sd, line):
     return H["cal"].predict_proba(np.asarray(lg).reshape(-1, 1))[:, 1]
 
 
-def ladder(H, mu_i, sd_i, step=2.0, span=2):
-    """Half-point lines around the projection, with the corrected probability for each."""
-    base = np.round(mu_i * 2) / 2
+def ladder(H, mu_i, sd_i, step=2.0, span=2, centre=None):
+    """Half-point lines around the forecast, with the corrected probability for each.
+
+    `centre` is what the rungs are built around and should be the median, which is the
+    number published as the forecast. `mu_i` stays the mean because it is a parameter of
+    the distribution and p_over needs it.
+
+    Those were the same value until now, which meant the rungs sat around the mean while
+    the forecast shown beside them was the median. PRA is right-skewed so the mean runs
+    about half a point high, up to a full point, and on 5% of rows that was enough to shift
+    every rung one step away from the number it was supposed to bracket.
+    """
+    base = np.round((mu_i if centre is None else centre) * 2) / 2
     lines = []
     for k in range(-span, span + 1):
         L = base + k * step

@@ -326,10 +326,12 @@ def run(day_str):
             print(f"{lg}: no boardable players tonight")
             continue
         mu, sd = E.project(heads, tonight)
-        med = E.median(heads, mu, sd)
+        med = E.median(heads, mu, sd)          # unfloored, used to centre the ladder
         tonight["proj"] = mu                     # the mean, kept for the log
         tonight["sd"] = sd
         tonight["median"] = np.floor(med)        # the forecast, what gets displayed
+        tonight["med_raw"] = med                 # centres the ladder; flooring here would
+                                                 # pull every rung down by up to a point
         # a fixed line so the board is gradeable without knowing what a book posted,
         # the same trick the spread head uses with its -3.5
         tonight["grade_line"] = tonight["median"] + 2.5
@@ -342,7 +344,14 @@ def run(day_str):
 
         console.append(f"\n--- {lg} projections, {len(tonight)} players ---")
         for r in tonight.sort_values("gap", ascending=False).itertuples():
-            lad = E.ladder(heads, r.proj, r.sd, step=LADDER_STEP)
+            lad = E.ladder(heads, r.proj, r.sd, step=LADDER_STEP, centre=r.med_raw)
+            # The lowest rung that clears the price floor, which is the easiest line the
+            # board actually publishes. Grading belongs here rather than on `grade_line`,
+            # a line 2.5 above the forecast that exists only so the board is gradeable and
+            # is never shown to anyone.
+            pub = [(L, p) for L, p in lad
+                   if BF.min_odds(p) >= BF.PRICE_FLOOR and p >= 0.20]
+            line_lo, p_lo = (pub[0] if pub else (float("nan"), float("nan")))
             console.append(f"  {str(r.athlete_display_name)[:22]:<22} {r.matchup:<12} "
                            f"{MARKET_TAG} forecast {r.median:4.0f}  (mean {r.proj:.1f}, "
                            f"last10 {r.l10_pra:.1f})")
@@ -355,14 +364,16 @@ def run(day_str):
                              "median": float(r.median), "l10": round(float(r.l10_pra), 2),
                              "grade_line": float(r.grade_line),
                              "p_grade": round(float(r.p_grade), 4),
-                             "gap": round(float(r.gap), 2), "model": "v1"})
+                             "gap": round(float(r.gap), 2),
+                             "line_lo": float(line_lo), "p_lo": round(float(p_lo), 4),
+                             "model": "v1"})
 
         # Every playable player is pushed. A divergence filter was tested and dropped:
         # skill by gap band came out flat at 7.0% to 9.2% with no ordering, so selecting on
         # it was choosing different forecasts rather than better ones. The playability
         # filter in the engine does the real work.
         for r in tonight.sort_values("proj", ascending=False).itertuples():
-            lad = E.ladder(heads, r.proj, r.sd, step=LADDER_STEP)
+            lad = E.ladder(heads, r.proj, r.sd, step=LADDER_STEP, centre=r.med_raw)
             best = max(lad, key=lambda x: x[1] if x[1] < 0.75 else 0)
             if BF.min_odds(best[1]) < BF.PRICE_FLOOR:
                 skipped += 1
