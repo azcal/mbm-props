@@ -69,6 +69,24 @@ MARKET_TAG = SPEC.get("market_tag", "PTS+REB+AST")
 # injury absence and the NBA All-Star break, and is far short of an offseason.
 RECENT_DAYS = SPEC.get("recent_days", 21)
 
+# Retired 2026-08-07. Forecasts are still produced, logged and graded every run; nothing
+# reaches Discord and the dashboard shows this under Retired.
+#
+# The projection is genuinely better than naive, and that is not the same as bettable.
+# Measured on the 2026 holdout, 8,137 NBA player-games: MAE 6.608 against a last-ten
+# baseline of 6.944, a gain of 0.336 points. Against a typical standard deviation of 8.3
+# that is about 1.6 percentage points of probability edge at the line. Prop markets hold
+# 6.5% to 9%, needing roughly 3.2 to 4.5 points to break even, so the board is short by a
+# factor of two to three. WNBA is worse: +0.052 points of MAE, about 0.26 points of
+# probability, effectively nothing.
+#
+# And that 1.6 is measured against a naive last-ten average rather than against a book. A
+# book is not using a last-ten average, so the real gap is smaller and possibly negative.
+# Nothing in this stack carries market prices, so it cannot be measured either way.
+#
+# Set to False to publish again if a source of market prices ever makes that answerable.
+RETIRED = True
+
 
 def download(lg, cur):
     os.makedirs(DATA, exist_ok=True)
@@ -366,7 +384,8 @@ def run(day_str):
                              "p_grade": round(float(r.p_grade), 4),
                              "gap": round(float(r.gap), 2),
                              "line_lo": float(line_lo), "p_lo": round(float(p_lo), 4),
-                             "model": "v1"})
+                             "boarded": 0 if RETIRED else 1,
+                             "model": "v1-retired" if RETIRED else "v1"})
 
         # Every playable player is pushed. A divergence filter was tested and dropped:
         # skill by gap band came out flat at 7.0% to 9.2% with no ordering, so selecting on
@@ -406,7 +425,12 @@ def run(day_str):
 
     if all_rows:
         b = pd.DataFrame(all_rows)
-        key = lambda d: d.date.astype(str) + "|" + d.athlete_id.astype(str)
+        # Not astype(str) on its own: athlete_id reads back from CSV as float64 whenever
+        # the column has a blank, so the stored row keys on "2998938.0" and the new row on
+        # "2998938", the old row is never dropped, and each rerun leaves a duplicate.
+        _nk = lambda c: (c.astype(str).str.strip()
+                         .str.replace(r"\.0$", "", regex=True))
+        key = lambda d: _nk(d.date) + "|" + _nk(d.athlete_id)
         log = pd.concat([log[~key(log).isin(set(key(b)))] if len(log) else log, b],
                         ignore_index=True)
 
@@ -439,6 +463,19 @@ def run(day_str):
                       f"[{'OK' if ok else 'TRIPWIRE: bench review'}]")
                 if not ok:
                     alerts.append("Props PRA")
+
+    if RETIRED:
+        # Retired 2026-08-07, still forecast and graded, never published. See the note on
+        # RETIRED above for the arithmetic. Alerts still fire: if the projection stops
+        # beating the naive baseline that is worth knowing even for a board nobody bets.
+        print(f"\nRETIRED board: {len(push)} row(s) forecast and logged, nothing sent.")
+        if alerts:
+            notify.send("MBM Props (retired)",
+                        ["TRIPWIRE: " + ", ".join(alerts)
+                         + " no longer beating the baseline."
+                         + " This board is not published; flagged for the record."],
+                        None, notify.RED)
+        return
 
     mode, lines = tg_delta.gate(LOGS, day.strftime("%Y%m%d"), push)
     if lines or alerts:
