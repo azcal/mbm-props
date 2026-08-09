@@ -151,6 +151,10 @@ def slate(lg, day):
         return {}
     out = {}
     for ev in r.get("events", []):
+        # Only games that have not started. Without this a player's line is published for
+        # a game already under way, or one that finished hours ago.
+        if ev.get("status", {}).get("type", {}).get("state") != "pre":
+            continue
         for c in ev.get("competitions", []):
             cs = c.get("competitors", [])
             if len(cs) != 2:
