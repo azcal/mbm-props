@@ -1260,15 +1260,16 @@ date,league,athlete_id,player,team,status
 2026-10-21,NBA,5105555,Tobe Awaka,CHI,Day-To-Day
 2026-10-21,NBA,4278067,Nic Claxton,CHI,Out
 2026-10-21,NBA,4066650,Zach Collins,CHI,Day-To-Day
-2026-10-21,NBA,4683750,Jordan Hawkins,CHI,Day-To-Day
+2026-10-21,NBA,4683750,Jordan Hawkins,CHI,Out
 2026-10-21,NBA,5044385,Leonard Miller,CHI,Day-To-Day
 2026-10-21,NBA,4432822,Isaac Okoro,CHI,Day-To-Day
-2026-10-21,NBA,4848625,Dailyn Swain,CHI,Day-To-Day
+2026-10-21,NBA,4848625,Dailyn Swain,CHI,Out
 2026-10-21,NBA,4593125,Santi Aldama,DAL,Out
 2026-10-21,NBA,5148538,Tarik Biberovic,DAL,Out
+2026-10-21,NBA,5105806,Jett Howard,DAL,Day-To-Day
 2026-10-21,NBA,4683688,Dereck Lively II,DAL,Out
 2026-10-21,NBA,3138160,Caleb Martin,DAL,Out
-2026-10-21,NBA,4397886,Charles Bassey,GS,Day-To-Day
+2026-10-21,NBA,4397886,Charles Bassey,GS,Out
 2026-10-21,NBA,6430,Jimmy Butler III,GS,Out
 2026-10-21,NBA,3975,Stephen Curry,GS,Day-To-Day
 2026-10-21,NBA,4432171,Moses Moody,GS,Out
@@ -1284,7 +1285,7 @@ date,league,athlete_id,player,team,status
 2026-10-21,NBA,5108024,Yanic Konan Niederhauser,LAC,Out
 2026-10-21,NBA,4065778,Max Strus,LAC,Out
 2026-10-21,NBA,5113969,Cameron Carr,LAL,Out
-2026-10-21,NBA,4277811,Collin Sexton,LAL,Day-To-Day
+2026-10-21,NBA,4277811,Collin Sexton,LAL,Out
 2026-10-21,NBA,5060631,Adou Thiero,LAL,Out
 2026-10-21,NBA,4432810,Isaiah Stewart,MEM,Day-To-Day
 2026-10-21,NBA,4700818,Vladislav Goldin,MIA,Day-To-Day
