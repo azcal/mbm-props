@@ -1329,6 +1329,13 @@ date,league,athlete_id,player,team,status
 2026-10-22,NBA,3904625,Tacko Fall,PHI,Out
 2026-10-22,NBA,4871141,Ariel Hukporti,PHI,Out
 2026-10-22,NBA,3912848,Dean Wade,PHI,Day-To-Day
+2026-10-23,NBA,5105555,Tobe Awaka,CHI,Day-To-Day
+2026-10-23,NBA,4066650,Zach Collins,CHI,Day-To-Day
+2026-10-23,NBA,4871145,Josh Giddey,CHI,Day-To-Day
+2026-10-23,NBA,4683750,Jordan Hawkins,CHI,Day-To-Day
+2026-10-23,NBA,4848625,Dailyn Swain,CHI,Day-To-Day
+2026-10-23,NBA,2990962,Taurean Prince,DET,Day-To-Day
+2026-10-23,NBA,4065673,Tony Bradley,UTAH,Day-To-Day
 2026-10-23,NBA,4712863,Mouhamed Gueye,ATL,Out
 2026-10-23,NBA,5105571,Henri Veesaar,ATL,Out
 2026-10-23,NBA,4433188,Devin Carter,BOS,Out
@@ -1336,19 +1343,13 @@ date,league,athlete_id,player,team,status
 2026-10-23,NBA,5061575,Kon Knueppel,CHA,Out
 2026-10-23,NBA,4395651,Coby White,CHA,Out
 2026-10-23,NBA,4066218,Grant Williams,CHA,Out
-2026-10-23,NBA,5105555,Tobe Awaka,CHI,Day-To-Day
 2026-10-23,NBA,4278067,Nic Claxton,CHI,Out
-2026-10-23,NBA,4066650,Zach Collins,CHI,Day-To-Day
-2026-10-23,NBA,4871145,Josh Giddey,CHI,Day-To-Day
-2026-10-23,NBA,4683750,Jordan Hawkins,CHI,Day-To-Day
-2026-10-23,NBA,4848625,Dailyn Swain,CHI,Day-To-Day
 2026-10-23,NBA,4593125,Santi Aldama,DAL,Out
 2026-10-23,NBA,5148538,Tarik Biberovic,DAL,Out
 2026-10-23,NBA,5105806,Jett Howard,DAL,Day-To-Day
 2026-10-23,NBA,4683688,Dereck Lively II,DAL,Out
 2026-10-23,NBA,3138160,Caleb Martin,DAL,Out
-2026-10-23,NBA,2990962,Taurean Prince,DET,Day-To-Day
-2026-10-23,NBA,4397886,Charles Bassey,GS,Day-To-Day
+2026-10-23,NBA,4397886,Charles Bassey,GS,Out
 2026-10-23,NBA,6430,Jimmy Butler III,GS,Out
 2026-10-23,NBA,4432171,Moses Moody,GS,Out
 2026-10-23,NBA,4709138,Brandin Podziemski,GS,Day-To-Day
@@ -1386,7 +1387,6 @@ date,league,athlete_id,player,team,status
 2026-10-23,NBA,5101845,Jayden Quaintance,SA,Out
 2026-10-23,NBA,4432586,Nate Bittle,TOR,Out
 2026-10-23,NBA,4433268,Trey Alexander,UTAH,Out
-2026-10-23,NBA,4065673,Tony Bradley,UTAH,Day-To-Day
 2026-10-23,NBA,4396963,Blake Hinson,UTAH,Out
 2026-10-23,NBA,3102530,Jusuf Nurkic,UTAH,Out
 2026-10-23,NBA,5142718,AJ Dybantsa,WSH,Out
