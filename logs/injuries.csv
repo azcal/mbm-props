@@ -1460,8 +1460,6 @@ date,league,athlete_id,player,team,status
 2026-10-25,NBA,4065778,Max Strus,LAC,Out
 2026-10-25,NBA,5113969,Cameron Carr,LAL,Out
 2026-10-25,NBA,5060631,Adou Thiero,LAL,Out
-2026-10-25,NBA,4903027,Cedric Coward,MEM,Day-To-Day
-2026-10-25,NBA,4600663,Zach Edey,MEM,Out
 2026-10-25,NBA,3934673,Donte DiVincenzo,MIN,Out
 2026-10-25,NBA,4277869,Jose Alvarado,NY,Day-To-Day
 2026-10-25,NBA,5106270,Otega Oweh,OKC,Out
@@ -1477,11 +1475,14 @@ date,league,athlete_id,player,team,status
 2026-10-25,NBA,3904625,Tacko Fall,PHI,Out
 2026-10-25,NBA,4871141,Ariel Hukporti,PHI,Out
 2026-10-25,NBA,4432446,Jabari Walker,PHI,Out
-2026-10-25,NBA,4433174,Dylan Cardwell,SAC,Out
-2026-10-25,NBA,4594327,Keegan Murray,SAC,Day-To-Day
-2026-10-25,NBA,4898371,Maxime Raynaud,SAC,Out
-2026-10-25,NBA,3907387,Ben Simmons,SAC,Out
 2026-10-25,NBA,4432586,Nate Bittle,TOR,Out
 2026-10-25,NBA,4433268,Trey Alexander,UTAH,Out
 2026-10-25,NBA,4396963,Blake Hinson,UTAH,Out
 2026-10-25,NBA,3102530,Jusuf Nurkic,UTAH,Out
+2026-10-25,NBA,4903027,Cedric Coward,MEM,Day-To-Day
+2026-10-25,NBA,4600663,Zach Edey,MEM,Out
+2026-10-25,NBA,5231919,Karim Lopez,MEM,Day-To-Day
+2026-10-25,NBA,4433174,Dylan Cardwell,SAC,Out
+2026-10-25,NBA,4594327,Keegan Murray,SAC,Out
+2026-10-25,NBA,4898371,Maxime Raynaud,SAC,Out
+2026-10-25,NBA,3907387,Ben Simmons,SAC,Out
