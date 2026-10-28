@@ -1564,6 +1564,9 @@ date,league,athlete_id,player,team,status
 2026-10-27,NBA,3907387,Ben Simmons,SAC,Out
 2026-10-27,NBA,6440,Tobias Harris,SA,Out
 2026-10-27,NBA,5101845,Jayden Quaintance,SA,Out
+2026-10-28,NBA,4601025,Pelle Larsson,MIA,Day-To-Day
+2026-10-28,NBA,4277956,Jordan Poole,NO,Day-To-Day
+2026-10-28,NBA,5142718,AJ Dybantsa,WSH,Out
 2026-10-28,NBA,4712863,Mouhamed Gueye,ATL,Out
 2026-10-28,NBA,5105571,Henri Veesaar,ATL,Out
 2026-10-28,NBA,4397183,Aaron Wiggins,ATL,Day-To-Day
@@ -1587,14 +1590,15 @@ date,league,athlete_id,player,team,status
 2026-10-28,NBA,4432181,Julian Strawther,DEN,Out
 2026-10-28,NBA,4433621,Jalen Duren,DET,Out
 2026-10-28,NBA,4395702,Isaiah Joe,DET,Out
+2026-10-28,NBA,4684742,Ausar Thompson,DET,Day-To-Day
 2026-10-28,NBA,6430,Jimmy Butler III,GS,Out
 2026-10-28,NBA,5175737,Yaxel Lendeborg,GS,Day-To-Day
 2026-10-28,NBA,4432171,Moses Moody,GS,Out
 2026-10-28,NBA,3102531,Kristaps Porzingis,GS,Out
 2026-10-28,NBA,2991235,Steven Adams,HOU,Out
 2026-10-28,NBA,4871144,Alperen Sengun,HOU,Out
-2026-10-28,NBA,2990992,Marcus Smart,HOU,Day-To-Day
-2026-10-28,NBA,4396993,Tyrese Haliburton,IND,Day-To-Day
+2026-10-28,NBA,2990992,Marcus Smart,HOU,Out
+2026-10-28,NBA,4396993,Tyrese Haliburton,IND,Out
 2026-10-28,NBA,2530530,T.J. McConnell,IND,Out
 2026-10-28,NBA,4395712,Andrew Nembhard,IND,Day-To-Day
 2026-10-28,NBA,4396909,Aaron Nesmith,IND,Day-To-Day
@@ -1608,13 +1612,13 @@ date,league,athlete_id,player,team,status
 2026-10-28,NBA,5108024,Yanic Konan Niederhauser,LAC,Out
 2026-10-28,NBA,4065778,Max Strus,LAC,Out
 2026-10-28,NBA,5113969,Cameron Carr,LAL,Out
+2026-10-28,NBA,3945274,Luka Doncic,LAL,Out
 2026-10-28,NBA,5060631,Adou Thiero,LAL,Out
-2026-10-28,NBA,3899664,Simone Fontecchio,MIA,Day-To-Day
-2026-10-28,NBA,4601025,Pelle Larsson,MIA,Day-To-Day
+2026-10-28,NBA,4433137,Ziaire Williams,LAL,Out
+2026-10-28,NBA,3899664,Simone Fontecchio,MIA,Out
 2026-10-28,NBA,3934673,Donte DiVincenzo,MIN,Out
 2026-10-28,NBA,4594268,Anthony Edwards,MIN,Out
 2026-10-28,NBA,5061589,Yves Missi,NO,Out
-2026-10-28,NBA,4277956,Jordan Poole,NO,Day-To-Day
 2026-10-28,NBA,4277869,Jose Alvarado,NY,Out
 2026-10-28,NBA,2991350,Alex Caruso,OKC,Out
 2026-10-28,NBA,4433255,Chet Holmgren,OKC,Out
@@ -1625,6 +1629,7 @@ date,league,athlete_id,player,team,status
 2026-10-28,NBA,4683692,Cason Wallace,OKC,Out
 2026-10-28,NBA,4593803,Jalen Williams,OKC,Out
 2026-10-28,NBA,4432573,Paolo Banchero,ORL,Out
+2026-10-28,NBA,4712849,Anthony Black,ORL,Day-To-Day
 2026-10-28,NBA,4065654,Jonathan Isaac,ORL,Out
 2026-10-28,NBA,5107251,Izaiyah Nelson,ORL,Out
 2026-10-28,NBA,5214637,Noah Penda,ORL,Out
@@ -1644,6 +1649,5 @@ date,league,athlete_id,player,team,status
 2026-10-28,NBA,4066336,Lauri Markkanen,UTAH,Day-To-Day
 2026-10-28,NBA,3102530,Jusuf Nurkic,UTAH,Out
 2026-10-28,NBA,4432907,Justin Champagnie,WSH,Out
-2026-10-28,NBA,5142718,AJ Dybantsa,WSH,Out
 2026-10-28,NBA,4997537,Tristan Vukcevic,WSH,Out
 2026-10-28,NBA,4606840,Jamir Watkins,WSH,Out
