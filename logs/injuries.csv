@@ -1668,6 +1668,8 @@ date,league,athlete_id,player,team,status
 2026-10-29,NBA,4594327,Keegan Murray,SAC,Out
 2026-10-29,NBA,4898371,Maxime Raynaud,SAC,Out
 2026-10-29,NBA,3907387,Ben Simmons,SAC,Out
+2026-10-30,NBA,4431687,Patrick Williams,CHI,Out
+2026-10-30,NBA,5113969,Cameron Carr,LAL,Out
 2026-10-30,NBA,4433188,Devin Carter,BOS,Out
 2026-10-30,NBA,5105626,Tyler Bilodeau,BKN,Out
 2026-10-30,NBA,4712896,Noah Clowney,BKN,Day-To-Day
@@ -1680,7 +1682,6 @@ date,league,athlete_id,player,team,status
 2026-10-30,NBA,5105555,Tobe Awaka,CHI,Day-To-Day
 2026-10-30,NBA,4278067,Nic Claxton,CHI,Out
 2026-10-30,NBA,4397189,Jalen Smith,CHI,Day-To-Day
-2026-10-30,NBA,4431687,Patrick Williams,CHI,Out
 2026-10-30,NBA,4593125,Santi Aldama,DAL,Out
 2026-10-30,NBA,5148538,Tarik Biberovic,DAL,Out
 2026-10-30,NBA,5279129,Sergio de Larrea,DAL,Out
@@ -1700,11 +1701,13 @@ date,league,athlete_id,player,team,status
 2026-10-30,NBA,4871144,Alperen Sengun,HOU,Day-To-Day
 2026-10-30,NBA,4711272,Reed Sheppard,HOU,Out
 2026-10-30,NBA,2990992,Marcus Smart,HOU,Out
+2026-10-30,NBA,5157066,Johnny Furphy,IND,Out
 2026-10-30,NBA,4396993,Tyrese Haliburton,IND,Out
 2026-10-30,NBA,2530530,T.J. McConnell,IND,Out
 2026-10-30,NBA,4395712,Andrew Nembhard,IND,Day-To-Day
 2026-10-30,NBA,4396909,Aaron Nesmith,IND,Day-To-Day
 2026-10-30,NBA,4433076,Ben Sheppard,IND,Out
+2026-10-30,NBA,4278355,Obi Toppin,IND,Day-To-Day
 2026-10-30,NBA,4017837,Ivica Zubac,IND,Out
 2026-10-30,NBA,6580,Bradley Beal,LAC,Out
 2026-10-30,NBA,4066648,Rui Hachimura,LAC,Day-To-Day
@@ -1712,13 +1715,13 @@ date,league,athlete_id,player,team,status
 2026-10-30,NBA,4396818,Jordan Miller,LAC,Out
 2026-10-30,NBA,5108024,Yanic Konan Niederhauser,LAC,Out
 2026-10-30,NBA,4065778,Max Strus,LAC,Out
-2026-10-30,NBA,5113969,Cameron Carr,LAL,Out
 2026-10-30,NBA,5060631,Adou Thiero,LAL,Out
-2026-10-30,NBA,4433137,Ziaire Williams,LAL,Day-To-Day
+2026-10-30,NBA,4433137,Ziaire Williams,LAL,Out
 2026-10-30,NBA,3899664,Simone Fontecchio,MIA,Day-To-Day
 2026-10-30,NBA,3934673,Donte DiVincenzo,MIN,Out
 2026-10-30,NBA,4594268,Anthony Edwards,MIN,Out
 2026-10-30,NBA,4277869,Jose Alvarado,NY,Out
+2026-10-30,NBA,3136195,Karl-Anthony Towns,NY,Day-To-Day
 2026-10-30,NBA,4432573,Paolo Banchero,ORL,Out
 2026-10-30,NBA,4065654,Jonathan Isaac,ORL,Out
 2026-10-30,NBA,5107251,Izaiyah Nelson,ORL,Out
