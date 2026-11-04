@@ -1934,16 +1934,20 @@ date,league,athlete_id,player,team,status
 2026-11-02,NBA,5160992,Alex Sarr,WSH,Out
 2026-11-02,NBA,4997537,Tristan Vukcevic,WSH,Out
 2026-11-02,NBA,4606840,Jamir Watkins,WSH,Out
+2026-11-04,NBA,5061575,Kon Knueppel,CHA,Out
+2026-11-04,NBA,4431785,Scotty Pippen Jr.,MEM,Out
+2026-11-04,NBA,4593016,Quinten Post,MEM,Day-To-Day
+2026-11-04,NBA,4431772,Myron Gardner,MIA,Day-To-Day
+2026-11-04,NBA,4592699,Enrique Freeman,MIN,Out
 2026-11-04,NBA,4712863,Mouhamed Gueye,ATL,Out
 2026-11-04,NBA,4701230,Jalen Johnson,ATL,Day-To-Day
 2026-11-04,NBA,3146557,Jock Landale,ATL,Out
 2026-11-04,NBA,5105571,Henri Veesaar,ATL,Out
 2026-11-04,NBA,4433188,Devin Carter,BOS,Out
 2026-11-04,NBA,4066354,Payton Pritchard,BOS,Day-To-Day
-2026-11-04,NBA,4065648,Jayson Tatum,BOS,Day-To-Day
+2026-11-04,NBA,4065648,Jayson Tatum,BOS,Out
 2026-11-04,NBA,5105626,Tyler Bilodeau,BKN,Out
 2026-11-04,NBA,5175643,Egor Demin,BKN,Out
-2026-11-04,NBA,5061575,Kon Knueppel,CHA,Out
 2026-11-04,NBA,4395651,Coby White,CHA,Day-To-Day
 2026-11-04,NBA,4066218,Grant Williams,CHA,Out
 2026-11-04,NBA,4278067,Nic Claxton,CHI,Out
@@ -1962,7 +1966,7 @@ date,league,athlete_id,player,team,status
 2026-11-04,NBA,4433621,Jalen Duren,DET,Out
 2026-11-04,NBA,4395702,Isaiah Joe,DET,Out
 2026-11-04,NBA,2991235,Steven Adams,HOU,Out
-2026-11-04,NBA,3102529,Clint Capela,HOU,Day-To-Day
+2026-11-04,NBA,3102529,Clint Capela,HOU,Out
 2026-11-04,NBA,5157066,Johnny Furphy,IND,Out
 2026-11-04,NBA,4396993,Tyrese Haliburton,IND,Out
 2026-11-04,NBA,2530530,T.J. McConnell,IND,Out
@@ -1975,18 +1979,15 @@ date,league,athlete_id,player,team,status
 2026-11-04,NBA,4396818,Jordan Miller,LAC,Out
 2026-11-04,NBA,5108024,Yanic Konan Niederhauser,LAC,Out
 2026-11-04,NBA,5060631,Adou Thiero,LAL,Out
-2026-11-04,NBA,4431785,Scotty Pippen Jr.,MEM,Out
-2026-11-04,NBA,4593016,Quinten Post,MEM,Day-To-Day
 2026-11-04,NBA,3032977,Giannis Antetokounmpo,MIA,Day-To-Day
-2026-11-04,NBA,4431772,Myron Gardner,MIA,Day-To-Day
+2026-11-04,NBA,4697268,Kam Jones,MIL,Day-To-Day
 2026-11-04,NBA,3934673,Donte DiVincenzo,MIN,Out
 2026-11-04,NBA,4594268,Anthony Edwards,MIN,Out
-2026-11-04,NBA,4592699,Enrique Freeman,MIN,Out
-2026-11-04,NBA,4432847,Terrence Shannon Jr.,MIN,Day-To-Day
+2026-11-04,NBA,4432847,Terrence Shannon Jr.,MIN,Out
 2026-11-04,NBA,5061589,Yves Missi,NO,Out
 2026-11-04,NBA,4397688,Trey Murphy III,NO,Day-To-Day
 2026-11-04,NBA,4277956,Jordan Poole,NO,Out
-2026-11-04,NBA,3062679,Josh Hart,NY,Day-To-Day
+2026-11-04,NBA,3062679,Josh Hart,NY,Out
 2026-11-04,NBA,4433255,Chet Holmgren,OKC,Out
 2026-11-04,NBA,5061603,Thomas Sorber,OKC,Out
 2026-11-04,NBA,5159925,Nikola Topic,OKC,Out
@@ -2015,6 +2016,7 @@ date,league,athlete_id,player,team,status
 2026-11-04,NBA,3102530,Jusuf Nurkic,UTAH,Out
 2026-11-04,NBA,4432187,Reece Beekman,WSH,Out
 2026-11-04,NBA,4432907,Justin Champagnie,WSH,Out
+2026-11-04,NBA,5104155,Bilal Coulibaly,WSH,Day-To-Day
 2026-11-04,NBA,2581184,Anthony Gill,WSH,Day-To-Day
 2026-11-04,NBA,5160992,Alex Sarr,WSH,Day-To-Day
 2026-11-04,NBA,4997537,Tristan Vukcevic,WSH,Out
