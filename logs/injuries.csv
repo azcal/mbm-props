@@ -2248,6 +2248,9 @@ date,league,athlete_id,player,team,status
 2026-11-09,NBA,4606840,Jamir Watkins,WSH,Out
 2026-11-10,NBA,4277843,Gary Trent Jr.,MIL,Day-To-Day
 2026-11-10,NBA,4066211,Robert Williams III,POR,Day-To-Day
+2026-11-10,NBA,4278402,Jordan Goodwin,PHX,Out
+2026-11-10,NBA,4594327,Keegan Murray,SAC,Day-To-Day
+2026-11-10,NBA,3155942,Domantas Sabonis,SAC,Day-To-Day
 2026-11-10,NBA,6580,Bradley Beal,LAC,Out
 2026-11-10,NBA,4845363,Cam Christie,LAC,Day-To-Day
 2026-11-10,NBA,3913176,Brandon Ingram,LAC,Out
@@ -2255,6 +2258,7 @@ date,league,athlete_id,player,team,status
 2026-11-10,NBA,5108024,Yanic Konan Niederhauser,LAC,Out
 2026-11-10,NBA,3032977,Giannis Antetokounmpo,MIA,Day-To-Day
 2026-11-10,NBA,4395725,Tyler Herro,MIL,Day-To-Day
+2026-11-10,NBA,5105623,Kel'el Ware,MIL,Day-To-Day
 2026-11-10,NBA,3062679,Josh Hart,NY,Day-To-Day
 2026-11-10,NBA,4433255,Chet Holmgren,OKC,Out
 2026-11-10,NBA,5061603,Thomas Sorber,OKC,Out
@@ -2262,6 +2266,7 @@ date,league,athlete_id,player,team,status
 2026-11-10,NBA,4593803,Jalen Williams,OKC,Out
 2026-11-10,NBA,4432823,Jaylin Williams,OKC,Out
 2026-11-10,NBA,4432573,Paolo Banchero,ORL,Out
+2026-11-10,NBA,4702382,Tristan da Silva,ORL,Day-To-Day
 2026-11-10,NBA,4065654,Jonathan Isaac,ORL,Out
 2026-11-10,NBA,5107251,Izaiyah Nelson,ORL,Out
 2026-11-10,NBA,5214637,Noah Penda,ORL,Out
@@ -2269,16 +2274,13 @@ date,league,athlete_id,player,team,status
 2026-11-10,NBA,4870562,Dominick Barlow,PHI,Out
 2026-11-10,NBA,5105637,Adem Bona,PHI,Out
 2026-11-10,NBA,4871141,Ariel Hukporti,PHI,Out
-2026-11-10,NBA,4278402,Jordan Goodwin,PHX,Out
 2026-11-10,NBA,4701232,Mark Williams,PHX,Out
 2026-11-10,NBA,4578893,Vit Krejci,POR,Out
 2026-11-10,NBA,4279888,Ja Morant,POR,Out
 2026-11-10,NBA,4914336,Shaedon Sharpe,POR,Out
-2026-11-10,NBA,4594327,Keegan Murray,SAC,Day-To-Day
 2026-11-10,NBA,4898371,Maxime Raynaud,SAC,Out
-2026-11-10,NBA,3155942,Domantas Sabonis,SAC,Day-To-Day
 2026-11-10,NBA,3907387,Ben Simmons,SAC,Out
 2026-11-10,NBA,4433627,Keyonte George,UTAH,Out
 2026-11-10,NBA,4277961,Jaren Jackson Jr.,UTAH,Out
-2026-11-10,NBA,4066336,Lauri Markkanen,UTAH,Day-To-Day
+2026-11-10,NBA,4066336,Lauri Markkanen,UTAH,Out
 2026-11-10,NBA,3102530,Jusuf Nurkic,UTAH,Out
