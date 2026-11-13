@@ -2382,6 +2382,10 @@ date,league,athlete_id,player,team,status
 2026-11-12,NBA,4432907,Justin Champagnie,WSH,Out
 2026-11-12,NBA,4997537,Tristan Vukcevic,WSH,Out
 2026-11-12,NBA,4606840,Jamir Watkins,WSH,Out
+2026-11-13,NBA,3032977,Giannis Antetokounmpo,MIA,Day-To-Day
+2026-11-13,NBA,4278572,Jamal Cain,ORL,Day-To-Day
+2026-11-13,NBA,4702382,Tristan da Silva,ORL,Day-To-Day
+2026-11-13,NBA,4432165,Jalen Suggs,ORL,Out
 2026-11-13,NBA,5149077,Kingston Flemings,ATL,Day-To-Day
 2026-11-13,NBA,4585618,Keshon Gilbert,ATL,Out
 2026-11-13,NBA,4712863,Mouhamed Gueye,ATL,Out
@@ -2415,13 +2419,13 @@ date,league,athlete_id,player,team,status
 2026-11-13,NBA,4431785,Scotty Pippen Jr.,MEM,Out
 2026-11-13,NBA,4593016,Quinten Post,MEM,Out
 2026-11-13,NBA,5105462,Richie Saunders,MEM,Out
-2026-11-13,NBA,3032977,Giannis Antetokounmpo,MIA,Day-To-Day
 2026-11-13,NBA,4601025,Pelle Larsson,MIA,Day-To-Day
 2026-11-13,NBA,6475,Klay Thompson,MIA,Day-To-Day
 2026-11-13,NBA,4683634,Bennedict Mathurin,NO,Day-To-Day
-2026-11-13,NBA,4576086,Bryce McGowens,NO,Day-To-Day
+2026-11-13,NBA,4576086,Bryce McGowens,NO,Out
 2026-11-13,NBA,5061589,Yves Missi,NO,Out
-2026-11-13,NBA,4397688,Trey Murphy III,NO,Day-To-Day
+2026-11-13,NBA,4397688,Trey Murphy III,NO,Out
+2026-11-13,NBA,3907497,Dejounte Murray,NO,Out
 2026-11-13,NBA,4431675,Trendon Watford,NO,Out
 2026-11-13,NBA,4433255,Chet Holmgren,OKC,Out
 2026-11-13,NBA,4900671,Ajay Mitchell,OKC,Day-To-Day
@@ -2430,17 +2434,14 @@ date,league,athlete_id,player,team,status
 2026-11-13,NBA,4593803,Jalen Williams,OKC,Out
 2026-11-13,NBA,4432823,Jaylin Williams,OKC,Out
 2026-11-13,NBA,4432573,Paolo Banchero,ORL,Out
-2026-11-13,NBA,4278572,Jamal Cain,ORL,Day-To-Day
-2026-11-13,NBA,4702382,Tristan da Silva,ORL,Day-To-Day
 2026-11-13,NBA,4065654,Jonathan Isaac,ORL,Out
 2026-11-13,NBA,5107251,Izaiyah Nelson,ORL,Out
 2026-11-13,NBA,5214637,Noah Penda,ORL,Out
-2026-11-13,NBA,4432165,Jalen Suggs,ORL,Out
 2026-11-13,NBA,4578893,Vit Krejci,POR,Out
 2026-11-13,NBA,4279888,Ja Morant,POR,Out
 2026-11-13,NBA,4914336,Shaedon Sharpe,POR,Out
 2026-11-13,NBA,4706557,Chris Youngblood,POR,Out
-2026-11-13,NBA,4431679,Precious Achiuwa,SAC,Day-To-Day
+2026-11-13,NBA,4431679,Precious Achiuwa,SAC,Out
 2026-11-13,NBA,4898371,Maxime Raynaud,SAC,Out
 2026-11-13,NBA,3907387,Ben Simmons,SAC,Out
 2026-11-13,NBA,4066259,De'Aaron Fox,SA,Day-To-Day
