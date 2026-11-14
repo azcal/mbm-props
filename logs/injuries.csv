@@ -2452,14 +2452,21 @@ date,league,athlete_id,player,team,status
 2026-11-13,NBA,4277961,Jaren Jackson Jr.,UTAH,Out
 2026-11-13,NBA,4066336,Lauri Markkanen,UTAH,Out
 2026-11-13,NBA,3102530,Jusuf Nurkic,UTAH,Out
+2026-11-14,NBA,4848625,Dailyn Swain,CHI,Out
 2026-11-14,NBA,5101761,Mikel Brown Jr.,BKN,Day-To-Day
 2026-11-14,NBA,5279130,Nolan Traore,BKN,Day-To-Day
 2026-11-14,NBA,5105555,Tobe Awaka,CHI,Out
-2026-11-14,NBA,4848625,Dailyn Swain,CHI,Out
+2026-11-14,NBA,4278067,Nic Claxton,CHI,Day-To-Day
+2026-11-14,NBA,2595516,Norman Powell,CHI,Day-To-Day
+2026-11-14,NBA,4397189,Jalen Smith,CHI,Day-To-Day
 2026-11-14,NBA,5095151,Caleb Wilson,CHI,Out
+2026-11-14,NBA,4066328,Jarrett Allen,CLE,Day-To-Day
+2026-11-14,NBA,3992,James Harden,CLE,Day-To-Day
 2026-11-14,NBA,4066757,Sam Merrill,CLE,Out
+2026-11-14,NBA,3908809,Donovan Mitchell,CLE,Day-To-Day
 2026-11-14,NBA,4432158,Evan Mobley,CLE,Out
 2026-11-14,NBA,5106268,Nae'Qwan Tomlin,CLE,Out
+2026-11-14,NBA,4576087,Peyton Watson,CLE,Day-To-Day
 2026-11-14,NBA,5148538,Tarik Biberovic,DAL,Out
 2026-11-14,NBA,4432582,Max Christie,DAL,Day-To-Day
 2026-11-14,NBA,5279129,Sergio de Larrea,DAL,Out
@@ -2469,12 +2476,15 @@ date,league,athlete_id,player,team,status
 2026-11-14,NBA,4433621,Jalen Duren,DET,Out
 2026-11-14,NBA,4395702,Isaiah Joe,DET,Out
 2026-11-14,NBA,5037878,Ugonna Onyenso,DET,Day-To-Day
-2026-11-14,NBA,4600663,Zach Edey,MEM,Out
+2026-11-14,NBA,4600663,Zach Edey,MEM,Day-To-Day
+2026-11-14,NBA,2991070,Jerami Grant,MEM,Day-To-Day
+2026-11-14,NBA,4065733,Ty Jerome,MEM,Out
 2026-11-14,NBA,4431785,Scotty Pippen Jr.,MEM,Out
 2026-11-14,NBA,4593016,Quinten Post,MEM,Out
 2026-11-14,NBA,5105462,Richie Saunders,MEM,Out
-2026-11-14,NBA,4601025,Pelle Larsson,MIA,Out
-2026-11-14,NBA,6475,Klay Thompson,MIA,Out
+2026-11-14,NBA,3032977,Giannis Antetokounmpo,MIA,Day-To-Day
+2026-11-14,NBA,4601025,Pelle Larsson,MIA,Day-To-Day
+2026-11-14,NBA,6475,Klay Thompson,MIA,Day-To-Day
 2026-11-14,NBA,3934673,Donte DiVincenzo,MIN,Out
 2026-11-14,NBA,4594268,Anthony Edwards,MIN,Out
 2026-11-14,NBA,4576086,Bryce McGowens,NO,Out
